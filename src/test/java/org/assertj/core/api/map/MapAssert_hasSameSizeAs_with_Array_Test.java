@@ -16,10 +16,12 @@ package org.assertj.core.api.map;
 
 import static org.assertj.core.util.Arrays.array;
 
+import static org.mockito.Mockito.verify;
+
+import java.util.Map;
+
 import org.assertj.core.api.MapAssert;
 import org.assertj.core.api.MapAssertBaseTest;
-
-import static org.mockito.Mockito.verify;
 
 
 /**
@@ -32,8 +34,8 @@ public class MapAssert_hasSameSizeAs_with_Array_Test extends MapAssertBaseTest {
   private final String[] other = array("Yoda", "Luke");
 
   @Override
-  protected MapAssert<Object, Object> invoke_api_method() {
-    return assertions.hasSameSizeAs(other);
+  protected MapAssert<Object, Object, ?, Map<Object, Object>> invoke_api_method() {
+    return (MapAssert<Object, Object, ?, Map<Object, Object>>) assertions.hasSameSizeAs(other);
   }
 
   @Override

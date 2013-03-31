@@ -14,10 +14,12 @@
  */
 package org.assertj.core.api.map;
 
+import static org.mockito.Mockito.verify;
+
+import java.util.Map;
+
 import org.assertj.core.api.MapAssert;
 import org.assertj.core.api.MapAssertBaseTest;
-
-import static org.mockito.Mockito.verify;
 
 
 /**
@@ -29,8 +31,8 @@ import static org.mockito.Mockito.verify;
 public class MapAssert_isNotEmpty_Test extends MapAssertBaseTest {
 
   @Override
-  protected MapAssert<Object, Object> invoke_api_method() {
-    return assertions.isNotEmpty();
+  protected MapAssert<Object, Object, ?, Map<Object, Object>> invoke_api_method() {
+    return (MapAssert<Object, Object, ?, Map<Object, Object>>) assertions.isNotEmpty();
   }
 
   @Override

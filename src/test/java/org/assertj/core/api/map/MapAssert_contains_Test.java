@@ -17,11 +17,13 @@ package org.assertj.core.api.map;
 import static org.assertj.core.data.MapEntry.entry;
 import static org.assertj.core.util.Arrays.array;
 
+import static org.mockito.Mockito.verify;
+
+import java.util.Map;
+
 import org.assertj.core.api.MapAssert;
 import org.assertj.core.api.MapAssertBaseTest;
 import org.assertj.core.data.MapEntry;
-
-import static org.mockito.Mockito.verify;
 
 
 /**
@@ -35,12 +37,13 @@ public class MapAssert_contains_Test extends MapAssertBaseTest {
   final MapEntry[] entries = array(entry("key1", "value1"), entry("key2", "value2"));
 
   @Override
-  protected MapAssert<Object, Object> invoke_api_method() {
-    return assertions.contains(entry("key1", "value1"), entry("key2", "value2"));
+  protected MapAssert<Object, Object, ?, Map<Object, Object>> invoke_api_method() {
+    return (MapAssert<Object, Object, ?, Map<Object, Object>>) assertions.contains(entry("key1", "value1"), entry("key2", "value2"));
   }
 
   @Override
   protected void verify_internal_effects() {
     verify(maps).assertContains(getInfo(assertions), getActual(assertions), entries);
   }
+
 }

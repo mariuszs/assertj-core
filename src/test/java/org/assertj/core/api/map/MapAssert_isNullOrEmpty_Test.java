@@ -16,10 +16,12 @@ package org.assertj.core.api.map;
 
 import static org.mockito.Mockito.verify;
 
+import java.util.Map;
+
+import org.junit.Test;
 
 import org.assertj.core.api.MapAssert;
 import org.assertj.core.api.MapAssertBaseTest;
-import org.junit.Test;
 
 /**
  * Tests for <code>{@link MapAssert#isNullOrEmpty()}</code>.
@@ -30,7 +32,7 @@ import org.junit.Test;
 public class MapAssert_isNullOrEmpty_Test extends MapAssertBaseTest {
 
   @Override
-  protected MapAssert<Object, Object> invoke_api_method() {
+  protected MapAssert<Object, Object, ?, Map<Object, Object>> invoke_api_method() {
     assertions.isNullOrEmpty();
     return null;
   }
