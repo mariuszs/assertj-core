@@ -405,6 +405,10 @@ public class Assertions {
     return new CharSequenceAssert(actual);
   }
 
+  public static StringAssert assertThat(String actual) {
+    return new StringAssert(actual);
+  }
+  
   /**
    * Creates a new instance of <code>{@link DateAssert}</code>.
    * 

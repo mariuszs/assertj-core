@@ -30,7 +30,7 @@ public class Assertions_assertThat_with_CharSequence_Test {
 
   @Test
   public void should_create_Assert() {
-    CharSequenceAssert assertions = Assertions.assertThat("Yoda");
+    CharSequenceAssert assertions = Assertions.assertThat((CharSequence)"Yoda");
     assertNotNull(assertions);
   }
 
@@ -47,9 +47,15 @@ public class Assertions_assertThat_with_CharSequence_Test {
   }
 
   @Test
+  public void should_create_Assert_with_String() {
+    StringAssert assertions = Assertions.assertThat("Yoda");
+    assertNotNull(assertions);
+  }
+  
+  @Test
   public void should_pass_actual() {
     String actual = "Yoda";
-    CharSequenceAssert assertions = Assertions.assertThat(actual);
+    CharSequenceAssert assertions = Assertions.assertThat((CharSequence)actual);
     assertSame(actual, assertions.actual);
   }
 }
