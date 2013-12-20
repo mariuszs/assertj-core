@@ -17,11 +17,13 @@ package org.assertj.core.util;
 import static org.assertj.core.util.Strings.quote;
 import static org.junit.Assert.*;
 
+import org.assertj.core.presentation.HexadecimalPresentation;
+import org.assertj.core.presentation.StandardPresentation;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
- * Tests for {@link ArrayFormatter#format(Object)}.
+ * Tests for {@link ArrayFormatter#format(org.assertj.core.presentation.Presentation, Object)}.
  * 
  * @author Alex Ruiz
  */
@@ -35,74 +37,79 @@ public class ArrayFormatter_format_Test {
 
   @Test
   public void should_return_null_if_array_is_null() {
-    assertNull(formatter.format(null));
+    assertNull(formatter.format(StandardPresentation.instance(), null));
   }
 
   @Test
   public void should_return_null_if_parameter_is_not_array() {
-    assertNull(formatter.format("Hello"));
+    assertNull(formatter.format(StandardPresentation.instance(), "Hello"));
   }
 
   @Test
   public void should_format_boolean_array() {
-    assertEquals("[true, false, true]", formatter.format(new boolean[] { true, false, true }));
+    assertEquals("[true, false, true]", formatter.format(StandardPresentation.instance(), new boolean[]{true, false, true}));
   }
 
   @Test
   public void should_format_char_array() {
-    assertEquals("['a', 'b', 'c']", formatter.format(new char[] { 'a', 'b', 'c' }));
+    assertEquals("['a', 'b', 'c']", formatter.format(StandardPresentation.instance(), new char[] { 'a', 'b', 'c' }));
   }
 
   @Test
   public void should_format_byte_array() {
-    assertEquals("[0x06, 0x08]", formatter.format(new byte[] { 6, 8 }));
+    assertEquals("[6, 8]", formatter.format(StandardPresentation.instance(), new byte[] { 6, 8 }));
+  }
+
+  @Test
+  public void should_format_byte_array_in_hex_representation() {
+    assertEquals("[06:08]", formatter.format(new HexadecimalPresentation(), new byte[] { 6, 8 }));
   }
 
   @Test
   public void should_format_short_array() {
-    assertEquals("[6, 8]", formatter.format(new short[] { 6, 8 }));
+    assertEquals("[6, 8]", formatter.format(StandardPresentation.instance(), new short[] { 6, 8 }));
   }
 
   @Test
   public void should_format_int_array() {
-    assertEquals("[6, 8]", formatter.format(new int[] { 6, 8 }));
+    assertEquals("[6, 8]", formatter.format(StandardPresentation.instance(), new int[] { 6, 8 }));
   }
 
   @Test
   public void should_format_longArray() {
-    assertEquals("[6L, 8L]", formatter.format(new long[] { 6l, 8l }));
+    assertEquals("[6L, 8L]", formatter.format(StandardPresentation.instance(), new long[] { 6l, 8l }));
   }
 
   @Test
   public void should_format_float_array() {
-    assertEquals("[6.0f, 8.0f]", formatter.format(new float[] { 6f, 8f }));
+    assertEquals("[6.0f, 8.0f]", formatter.format(StandardPresentation.instance(), new float[] { 6f, 8f }));
   }
 
   @Test
   public void should_format_double_array() {
-    assertEquals("[6.0, 8.0]", formatter.format(new double[] { 6d, 8d }));
+    assertEquals("[6.0, 8.0]", formatter.format(StandardPresentation.instance(), new double[] { 6d, 8d }));
   }
 
   @Test
   public void should_format_String_array() {
-    assertEquals("[\"Hello\", \"World\"]", formatter.format(new Object[] { "Hello", "World" }));
+    assertEquals("[\"Hello\", \"World\"]", formatter.format(StandardPresentation.instance(), new Object[] { "Hello", "World" }));
   }
 
   @Test
   public void should_format_array_with_null_element() {
-    assertEquals("[\"Hello\", null]", formatter.format(new Object[] { "Hello", null }));
+    assertEquals("[\"Hello\", null]", formatter.format(StandardPresentation.instance(), new Object[] { "Hello", null }));
   }
 
   @Test
   public void should_format_Object_array() {
-    assertEquals("[\"Hello\", 'Anakin']", formatter.format(new Object[] { "Hello", new Person("Anakin") }));
+    assertEquals("[\"Hello\", 'Anakin']", formatter.format(StandardPresentation.instance(), new Object[] { "Hello", new Person("Anakin") }));
   }
 
   @Test
   public void should_format_Object_array_that_has_primitive_array_as_element() {
     boolean booleans[] = { true, false };
     Object[] array = { "Hello", booleans };
-    assertEquals("[\"Hello\", [true, false]]", formatter.format(array));
+    assertEquals("[\"Hello\", [true, false]]", formatter.format(StandardPresentation.instance(), array));
   }
 
   @Test
@@ -110,7 +117,7 @@ public class ArrayFormatter_format_Test {
     Object[] array1 = { "Hello", "World" };
     Object[] array2 = { array1 };
     array1[1] = array2;
-    assertEquals("[[\"Hello\", [...]]]", formatter.format(array2));
+    assertEquals("[[\"Hello\", [...]]]", formatter.format(StandardPresentation.instance(), array2));
   }
 
   private static class Person {

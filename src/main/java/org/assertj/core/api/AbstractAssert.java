@@ -119,6 +119,18 @@ public abstract class AbstractAssert<S extends AbstractAssert<S, A>, A> implemen
     return describedAs(description);
   }
 
+  @Override
+  public S asHex() {
+    info.presentationAsHexadecimal();
+    return myself;
+  }
+
+  @Override
+  public S asBinary() {
+    info.presentationAsBinary();
+    return myself;
+  }
+
   /** {@inheritDoc} */
   @Override
   public S describedAs(String description, Object... args) {

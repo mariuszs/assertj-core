@@ -26,6 +26,8 @@ import java.util.Arrays;
 
 import org.assertj.core.description.Description;
 import org.assertj.core.description.EmptyTextDescription;
+import org.assertj.core.presentation.Presentation;
+import org.assertj.core.presentation.StandardPresentation;
 import org.assertj.core.util.VisibleForTesting;
 
 /**
@@ -114,14 +116,14 @@ public class BasicErrorMessageFactory implements ErrorMessageFactory {
 
   /** {@inheritDoc} */
   @Override
-  public String create(Description d) {
-    return formatter.format(d, format, arguments);
+  public String create(Description d, Presentation presentation) {
+    return formatter.format(d, presentation, format, arguments);
   }
 
   /** {@inheritDoc} */
   @Override
   public String create() {
-    return formatter.format(EmptyTextDescription.emptyText(), format, arguments);
+    return formatter.format(EmptyTextDescription.emptyText(), StandardPresentation.instance(), format, arguments);
   }
 
   /**
@@ -161,7 +163,8 @@ public class BasicErrorMessageFactory implements ErrorMessageFactory {
 
   @Override
   public String toString() {
-    return format("%s[format=%s, arguments=%s]", getClass().getSimpleName(), quote(format), format(arguments));
+    return format("%s[format=%s, arguments=%s]", getClass().getSimpleName(), quote(format),
+        format(StandardPresentation.instance(), arguments));
   }
 
 }

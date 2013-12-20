@@ -515,6 +515,7 @@ public class Strings {
     final String formattedActualXml = xmlPrettyFormat(actualXml.toString());
     final String formattedExpectedXml = xmlPrettyFormat(expectedXml.toString());
     if (!comparisonStrategy.areEqual(formattedActualXml, formattedExpectedXml))
-      throw failures.failure(info, shouldBeEqual(formattedActualXml, formattedExpectedXml, comparisonStrategy));
+      throw failures.failure(info, shouldBeEqual(formattedActualXml, formattedExpectedXml, comparisonStrategy,
+          info.presentation()));
   }
 }

@@ -57,7 +57,8 @@ public class Tuple {
 
   @Override
   public String toString() {
-    return Collections.format(datas, START, END);
+    //FIXME: Missing presentations!
+    return Collections.format(null, datas, START, END);
   }
 
   public static List<Tuple> buildTuples(int n) {

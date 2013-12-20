@@ -25,6 +25,7 @@ import static org.mockito.Mockito.verify;
 import org.assertj.core.api.AssertionInfo;
 import org.assertj.core.internal.Characters;
 import org.assertj.core.internal.CharactersBaseTest;
+import org.assertj.core.presentation.StandardPresentation;
 import org.junit.Test;
 
 
@@ -53,7 +54,7 @@ public class Characters_assertEqual_Test extends CharactersBaseTest {
     try {
       charactersWithCaseInsensitiveComparisonStrategy.assertEqual(info, 'b', 'a');
     } catch (AssertionError e) {
-      verify(failures).failure(info, shouldBeEqual('b', 'a'));
+      verify(failures).failure(info, shouldBeEqual('b', 'a', info.presentation()));
       return;
     }
     failBecauseExpectedAssertionErrorWasNotThrown();
@@ -76,7 +77,8 @@ public class Characters_assertEqual_Test extends CharactersBaseTest {
     try {
       charactersWithCaseInsensitiveComparisonStrategy.assertEqual(info, 'b', 'a');
     } catch (AssertionError e) {
-      verify(failures).failure(info, shouldBeEqual('b', 'a', caseInsensitiveComparisonStrategy));
+      verify(failures).failure(info, shouldBeEqual('b', 'a', caseInsensitiveComparisonStrategy,
+          StandardPresentation.instance()));
       return;
     }
     failBecauseExpectedAssertionErrorWasNotThrown();

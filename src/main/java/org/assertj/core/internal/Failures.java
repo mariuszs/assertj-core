@@ -17,10 +17,12 @@ package org.assertj.core.internal;
 import static org.assertj.core.util.Strings.isNullOrEmpty;
 
 import org.assertj.core.api.AssertionInfo;
+import org.assertj.core.description.Description;
 import org.assertj.core.error.AssertionErrorFactory;
 import org.assertj.core.error.ErrorMessageFactory;
 import org.assertj.core.error.MessageFormatter;
 import org.assertj.core.error.ShouldBeEqual;
+import org.assertj.core.presentation.Presentation;
 import org.assertj.core.util.Throwables;
 import org.assertj.core.util.VisibleForTesting;
 
@@ -74,7 +76,7 @@ public class Failures {
   public AssertionError failure(AssertionInfo info, AssertionErrorFactory factory) {
     AssertionError error = failureIfErrorMessageIsOverriden(info);
     if (error != null) return error;
-    return factory.newAssertionError(info.description());
+    return factory.newAssertionError(info.description(), info.presentation());
   }
 
   /**
@@ -93,7 +95,7 @@ public class Failures {
   public AssertionError failure(AssertionInfo info, ErrorMessageFactory message) {
     AssertionError error = failureIfErrorMessageIsOverriden(info);
     if (error != null) return error;
-    AssertionError assertionError = new AssertionError(message.create(info.description()));
+    AssertionError assertionError = new AssertionError(message.create(info.description(), info.presentation()));
     removeAssertJRelatedElementsFromStackTraceIfNeeded(assertionError);
     return assertionError;
   }
@@ -101,7 +103,7 @@ public class Failures {
   private AssertionError failureIfErrorMessageIsOverriden(AssertionInfo info) {
     String overridingErrorMessage = info.overridingErrorMessage();
     return isNullOrEmpty(overridingErrorMessage) ? null : failure(MessageFormatter.instance().format(info.description(),
-        overridingErrorMessage));
+        info.presentation(), overridingErrorMessage));
   }
 
   /**
@@ -147,7 +149,7 @@ org.junit.ComparisonFailure: expected:<'[Ronaldo]'> but was:<'[Messi]'>
   at examples.StackTraceFilterExample.main(StackTraceFilterExample.java:20)
    * </pre>
    * 
-   * Method is public because we need to call it from {@link ShouldBeEqual#newAssertionError(org.assertj.core.description.Description)} that is building a junit ComparisonFailure by reflection. 
+   * Method is public because we need to call it from {@link ShouldBeEqual#newAssertionError(Description, Presentation)} that is building a junit ComparisonFailure by reflection.
    *  
    * @param assertionError the {@code AssertionError} to filter stack trace if option is set.
    */

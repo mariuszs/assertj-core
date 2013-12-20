@@ -21,14 +21,14 @@ import static org.junit.Assert.assertEquals;
 import org.assertj.core.api.TestCondition;
 import org.assertj.core.description.Description;
 import org.assertj.core.description.TextDescription;
-import org.assertj.core.error.ErrorMessageFactory;
-import org.assertj.core.error.ShouldBe;
+import org.assertj.core.presentation.Presentation;
+import org.assertj.core.presentation.StandardPresentation;
 import org.junit.Before;
 import org.junit.Test;
 
 
 /**
- * Tests for <code>{@link ShouldBe#create(Description)}</code>.
+ * Tests for <code>{@link ShouldBe#create(Description, Presentation)}</code>.
  * 
  * @author Yvonne Wang
  */
@@ -43,7 +43,7 @@ public class ShouldBe_create_Test {
 
   @Test
   public void should_create_error_message() {
-    String message = factory.create(new TextDescription("Test"));
+    String message = factory.create(new TextDescription("Test"), new StandardPresentation());
     assertEquals("[Test] \nExpecting:\n <\"Yoda\">\nto be <green>", message);
   }
 }

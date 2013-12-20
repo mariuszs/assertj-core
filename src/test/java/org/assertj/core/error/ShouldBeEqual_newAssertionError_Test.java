@@ -23,16 +23,16 @@ import java.util.List;
 
 
 import org.assertj.core.description.Description;
-import org.assertj.core.error.DescriptionFormatter;
-import org.assertj.core.error.ShouldBeEqual;
 import org.assertj.core.internal.TestDescription;
+import org.assertj.core.presentation.Presentation;
+import org.assertj.core.presentation.StandardPresentation;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.*;
 import org.junit.runners.Parameterized.Parameters;
 
 /**
- * Tests for <code>{@link ShouldBeEqual#newAssertionError(Description)}</code>.
+ * Tests for <code>{@link ShouldBeEqual#newAssertionError(Description, Presentation)}</code>.
  * 
  * @author Alex Ruiz
  */
@@ -57,7 +57,7 @@ public class ShouldBeEqual_newAssertionError_Test {
   @Before
   public void setUp() {
     description = new TestDescription("Jedi");
-    factory = (ShouldBeEqual) shouldBeEqual("Luke", "Yoda");
+    factory = (ShouldBeEqual) shouldBeEqual("Luke", "Yoda", StandardPresentation.instance());
     factory.descriptionFormatter = mock(DescriptionFormatter.class);
     formatter = factory.descriptionFormatter;
   }
@@ -65,7 +65,7 @@ public class ShouldBeEqual_newAssertionError_Test {
   @Test
   public void should_create_ComparisonFailure_if_JUnit4_is_present_and_trim_spaces_in_formatted_description() {
     when(formatter.format(description)).thenReturn(formattedDescription);
-    AssertionError error = factory.newAssertionError(description);
+    AssertionError error = factory.newAssertionError(description, new StandardPresentation());
     assertEquals(ComparisonFailure.class, error.getClass());
     assertEquals("[Jedi] expected:<\"[Yoda]\"> but was:<\"[Luke]\">", error.getMessage());
   }

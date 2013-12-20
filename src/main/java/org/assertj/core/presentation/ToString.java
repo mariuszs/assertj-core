@@ -12,7 +12,9 @@
  *
  * Copyright @2009-2012 the original author or authors.
  */
-package org.assertj.core.util;
+package org.assertj.core.presentation;
+
+import org.assertj.core.util.*;
 
 import static org.assertj.core.util.Arrays.isArray;
 import static org.assertj.core.util.Strings.concat;
@@ -28,10 +30,9 @@ import java.util.*;
  * @author Alex Ruiz
  * @author Joel Costigliola
  * @author Yvonne Wang
+ * @author Mariusz Smykula
  */
-public final class ToString {
-
-  final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
+final class ToString {
 
   /**
    * Returns the {@code toString} representation of the given object. It may or not the object's own implementation of
@@ -40,9 +41,9 @@ public final class ToString {
    * @param o the given object.
    * @return the {@code toString} representation of the given object.
    */
-  public static String toStringOf(Object o) {
+  public static String toStringOf(Presentation p, Object o) {
     if (isArray(o)) {
-      return Arrays.format(o);
+      return org.assertj.core.util.Arrays.format(p, o);
     }
     if (o instanceof Calendar) {
       return toStringOf((Calendar) o);
@@ -51,13 +52,10 @@ public final class ToString {
       return toStringOf((Class<?>) o);
     }
     if (o instanceof Collection<?>) {
-      return toStringOf((Collection<?>) o);
+      return toStringOf((Collection<?>) o, p);
     }
     if (o instanceof Date) {
       return toStringOf((Date) o);
-    }
-    if (o instanceof Byte) {
-      return toStringOf((Byte) o);
     }
     if (o instanceof Float) {
       return toStringOf((Float) o);
@@ -69,7 +67,7 @@ public final class ToString {
       return toStringOf((File) o);
     }
     if (o instanceof Map<?, ?>) {
-      return toStringOf((Map<?, ?>) o);
+      return toStringOf((Map<?, ?>) o, p);
     }
     if (o instanceof String) {
       return toStringOf((String) o);
@@ -85,6 +83,7 @@ public final class ToString {
     }
     return o == null ? null : o.toString();
   }
+
   private static String toStringOf(Comparator<?> comparator) {
     String comparatorSimpleClassName = comparator.getClass().getSimpleName();
     return quote(!comparatorSimpleClassName.isEmpty() ? comparatorSimpleClassName : "Anonymous Comparator class");
@@ -106,8 +105,8 @@ public final class ToString {
     return concat("'", c, "'");
   }
 
-  private static String toStringOf(Collection<?> c) {
-    return Collections.format(c);
+  private static String toStringOf(Collection<?> c, Presentation p) {
+    return org.assertj.core.util.Collections.format(p, c);
   }
 
   private static String toStringOf(Date d) {
@@ -126,21 +125,12 @@ public final class ToString {
     return f.getAbsolutePath();
   }
 
-  private static String toStringOf(Map<?, ?> m) {
-    return Maps.format(m);
+  private static String toStringOf(Map<?, ?> m, Presentation p) {
+    return Maps.format(p, m);
   }
 
   private static String toStringOf(SimpleDateFormat dateFormat) {
     return dateFormat.toPattern();
-  }
-
-  private static String toStringOf(Byte b) {
-    return "0x" + byteToStringHex(b);
-  }
-
-  private static String byteToStringHex(Byte b) {
-    int v = b & 0xFF;
-    return new String(new char[]{hexArray[v >>> 4], hexArray[v & 0x0F]});
   }
 
   private ToString() {}
